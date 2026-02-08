@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>网页内容总结器</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>网页内容总结器</h1>
+    <p>点击下方按钮或使用快捷键总结当前页面</p>
+
+    <button id="summarizeBtn">总结当前页面</button>
+
+    <div class="info">
+      <h3>快捷键</h3>
+      <p>Windows/Linux: <strong>Ctrl + Shift + H</strong></p>
+      <p>Mac: <strong>Command + Shift + H</strong></p>
+      <button id="settingsBtn" class="settings-btn">设置快捷键</button>
+    </div>
+
+    <div class="info">
+      <h3>功能说明</h3>
+      <ul>
+        <li>复制页面链接和提示词到剪贴板</li>
+        <li>自动打开百度AI搜索进行总结</li>
+      </ul>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+
+</html>

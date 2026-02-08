@@ -1,0 +1,35 @@
+{
+    "manifest_version": 3,
+    "name": "网页内容总结器",
+    "version": "1.0.0",
+    "description": "一键将当前页面链接发送到百度AI搜索进行内容总结",
+    "permissions": [
+        "activeTab",
+        "clipboardWrite"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icons/icon16.svg",
+            "48": "icons/icon48.svg",
+            "128": "icons/icon128.svg"
+        }
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "commands": {
+        "summarize-page": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+H",
+                "mac": "Command+Shift+H"
+            },
+            "description": "总结当前页面"
+        }
+    },
+    "icons": {
+        "16": "icons/icon16.svg",
+        "48": "icons/icon48.svg",
+        "128": "icons/icon128.svg"
+    }
+}
