@@ -1,3 +1,12 @@
+// 平台URL配置
+const PLATFORM_URLS = {
+  baidu: (query) => `https://chat.baidu.com/search?word=${encodeURIComponent(query)}`,
+  chatgpt: () => 'https://chatgpt.com/',
+  gemini: () => 'https://gemini.google.com/app',
+  kimi: () => 'https://www.kimi.com/',
+  doubao: () => 'https://www.doubao.com/chat/?from_login=1'
+};
+
 // 监听插件图标点击事件
 chrome.action.onClicked.addListener(async (tab) => {
   await summarizePage(tab);
@@ -18,38 +27,53 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'summarize') {
     chrome.tabs.get(request.tabId, async (tab) => {
       if (tab) {
-        await summarizePage(tab);
+        await summarizePage(tab, request.url, request.title);
       }
     });
   }
 });
 
 // 核心功能：总结页面
-async function summarizePage(tab) {
-  // 即使页面未加载完成，tab对象也包含url属性
-  const url = tab.url || tab.pendingUrl;
+async function summarizePage(tab, url = null, title = null) {
+  const targetUrl = url || tab.url || tab.pendingUrl;
+  const pageTitle = title || tab.title;
   
-  if (!url) {
+  if (!targetUrl) {
     console.error("无法获取页面URL");
     return;
   }
 
-  // 构建提示词
-  const prompt = "请总结这个网页的内容";
-  const query = `${prompt}：${url}`;
-  
-  // UTF-8编码
-  const encodedQuery = encodeURIComponent(query);
-  
-  // 复制到剪贴板
-  try {
-    await navigator.clipboard.writeText(query);
-    console.log("已复制到剪贴板:", query);
-  } catch (err) {
-    console.error("复制失败:", err);
-  }
-  
-  // 打开百度AI搜索
-  const baiduAISearchUrl = `https://chat.baidu.com/search?word=${encodedQuery}`;
-  chrome.tabs.create({ url: baiduAISearchUrl });
+  // 获取用户配置
+  chrome.storage.local.get(['targetAI', 'customTemplate'], async (result) => {
+    const targetAI = result.targetAI || 'baidu';
+    const defaultPrompt = chrome.i18n.getMessage('defaultPrompt');
+    const template = result.customTemplate || defaultPrompt;
+    
+    // 替换变量
+    const fallbackTitle = chrome.i18n.getMessage('fallbackTitle');
+    const finalPrompt = template
+      .replace('${url}', targetUrl)
+      .replace('${title}', pageTitle || fallbackTitle);
+    
+    // 复制到剪贴板
+    try {
+      await navigator.clipboard.writeText(finalPrompt);
+      console.log("已复制到剪贴板:", finalPrompt);
+    } catch (err) {
+      console.error("复制失败:", err);
+    }
+    
+    // 根据平台类型选择打开方式
+    if (targetAI === 'baidu') {
+      // 百度AI使用URL方式
+      const baiduAISearchUrl = PLATFORM_URLS.baidu(finalPrompt);
+      chrome.tabs.create({ url: baiduAISearchUrl });
+    } else {
+      // 其他平台使用Storage Bridge模式
+      chrome.storage.local.set({ 'pendingSummarizeTask': finalPrompt }, () => {
+        const platformUrl = PLATFORM_URLS[targetAI]();
+        chrome.tabs.create({ url: platformUrl });
+      });
+    }
+  });
 }

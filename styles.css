@@ -111,3 +111,147 @@ p {
 .settings-btn:active {
   transform: translateY(0);
 }
+
+/* 设置区域样式 */
+.settings-section {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.settings-section label {
+  display: block;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.platform-select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.platform-select:hover {
+  border-color: #667eea;
+}
+
+.platform-select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* 提示词区域样式 */
+.prompt-section {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.prompt-section label {
+  display: block;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.prompt-section p {
+  color: #666;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+#promptInput {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+#promptInput:hover {
+  border-color: #667eea;
+}
+
+#promptInput:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* 按钮组样式 */
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* 次要按钮样式 */
+.btn-secondary {
+  flex: 1;
+  padding: 10px 15px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background: #5568d3;
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* 轮廓按钮样式 */
+.btn-outline {
+  background: transparent;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.btn-outline:hover {
+  background: #667eea;
+  color: white;
+}
+
+/* 主按钮样式 */
+.primary-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 25px;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+.primary-btn:active {
+  transform: translateY(0);
+}

@@ -2,13 +2,16 @@
 
 [English Documentation](README_EN.md) | 中文文档
 
-一个简单易用的浏览器插件，支持 Chrome 和 Edge，可以一键将当前网页发送到百度 AI 搜索进行内容总结。
+一个简单易用的浏览器插件，支持 Chrome 和 Edge，可以一键将当前网页发送到多个 AI 平台（百度 AI、ChatGPT、Gemini、Kimi、豆包）进行内容总结。
 
 ## 功能特性
 
 - 🚀 一键总结：点击插件图标或使用快捷键即可触发
+- 🤖 多平台支持：支持百度 AI、ChatGPT、Gemini、Kimi、豆包 五大 AI 平台
+- ⚙️ 自定义提示词：支持自定义提示词模板，可用变量 `${url}` 和 `${title}`
 - 📋 自动复制：自动将页面链接和提示词复制到剪贴板
-- 🔍 AI 总结：自动打开百度 AI 搜索页面进行智能总结
+- 🔍 AI 总结：自动打开对应的 AI 平台页面进行智能总结
+- 🌍 多语言支持：支持中英文界面自动切换
 - ⌨️ 快捷键支持：默认快捷键 `Ctrl+Shift+H`（Mac: `Command+Shift+H`）
 - 🎨 美观界面：简洁现代的渐变色设计
 
@@ -53,14 +56,35 @@
 ### 方式一：点击插件图标
 
 1. 在任意网页上，点击浏览器工具栏中的"网页内容总结器"图标
-2. 插件会自动：
+2. 在弹出的界面中：
+   - 选择 AI 平台（默认：百度 AI 搜索）
+   - （可选）自定义提示词模板，支持 `${url}` 和 `${title}` 变量
+   - 点击"总结当前页面"按钮
+3. 插件会自动：
+   - 保存当前设置
    - 复制当前页面链接和总结提示词到剪贴板
-   - 在新标签页打开百度 AI 搜索页面
+   - 在新标签页打开所选 AI 平台页面
+   - 自动填充提示词并提交（除百度 AI 外）
 
 ### 方式二：使用快捷键
 
 - **Windows/Linux**: `Ctrl + Shift + H`
 - **Mac**: `Command + Shift + H`
+
+快捷键将使用上次保存的设置进行总结。
+
+### 自定义提示词
+
+在插件弹窗中，您可以自定义提示词模板，支持以下变量：
+
+- `${url}` - 当前网页的 URL
+- `${title}` - 当前网页的标题
+
+示例：
+```
+请详细总结这个网页的内容：${url}
+网页标题：${title}
+```
 
 ### 自定义快捷键
 
@@ -76,13 +100,35 @@
 2. 找到"网页内容总结器"
 3. 点击铅笔图标修改快捷键
 
+## 支持的 AI 平台
+
+| 平台 | 说明 |
+|------|------|
+| 百度 AI 搜索 | 通过 URL 参数传递，无需额外操作 |
+| ChatGPT | 使用 Storage Bridge 模式，自动填充并提交 |
+| Google Gemini | 使用 Storage Bridge 模式，自动填充并提交 |
+| Kimi (月之暗面) | 使用 Storage Bridge 模式，自动填充并提交 |
+| 豆包 (Doubao) | 使用 Storage Bridge 模式，自动填充并提交 |
+
 ## 工作原理
 
-1. 获取当前活动标签页的 URL
-2. 构建总结请求：`请总结这个网页的内容：[页面URL]`
+### 百度 AI 搜索（URL 模式）
+
+1. 获取当前活动标签页的 URL 和标题
+2. 根据用户配置的提示词模板，替换变量
 3. 将请求内容复制到剪贴板
-4. 使用 UTF-8 编码后，打开百度 AI 搜索页面
+4. 使用 UTF-8 编码后，通过 URL 参数打开百度 AI 搜索页面
 5. 百度 AI 会自动对网页内容进行分析和总结
+
+### 其他 AI 平台（Storage Bridge 模式）
+
+1. 获取当前活动标签页的 URL 和标题
+2. 根据用户配置的提示词模板，替换变量
+3. 将请求内容复制到剪贴板
+4. 将提示词存储到 `chrome.storage.local`
+5. 打开对应的 AI 平台页面
+6. Content Script 自动读取存储中的提示词
+7. 填充到输入框并自动提交
 
 ## 项目结构
 
@@ -93,6 +139,15 @@ web_summarizer/
 ├── popup.html             # 弹窗界面
 ├── popup.js               # 弹窗交互逻辑
 ├── styles.css             # 样式文件
+├── content_chatgpt.js     # ChatGPT 自动填充脚本
+├── content_gemini.js      # Gemini 自动填充脚本
+├── content_kimi.js        # Kimi 自动填充脚本
+├── content_doubao.js      # 豆包自动填充脚本
+├── _locales/              # 国际化文件
+│   ├── zh_CN/
+│   │   └── messages.json  # 中文语言包
+│   └── en/
+│       └── messages.json  # 英文语言包
 ├── icons/                 # 图标目录
 │   ├── icon16.svg
 │   ├── icon48.svg
@@ -107,6 +162,8 @@ web_summarizer/
 - **JavaScript (ES6+)** - 核心逻辑实现
 - **CSS3** - 界面样式设计
 - **SVG** - 矢量图标
+- **Chrome Storage API** - 配置存储和数据传递
+- **Content Scripts** - 页面注入脚本
 
 ## 权限说明
 
@@ -114,6 +171,7 @@ web_summarizer/
 
 - `activeTab` - 获取当前活动标签页信息
 - `clipboardWrite` - 写入剪贴板权限
+- `storage` - 存储用户配置和传递数据
 
 ## 常见问题
 
@@ -123,11 +181,17 @@ A: 请确保已在 `chrome://extensions/`（Chrome）或 `edge://extensions/`（
 **Q: 快捷键没有反应？**  
 A: 请访问 `chrome://extensions/shortcuts`（Chrome）或 `edge://extensions/shortcuts`（Edge）检查快捷键设置，确认未被其他应用占用。
 
-**Q: 百度 AI 搜索页面打不开？**  
-A: 请检查网络连接，确保可以访问百度服务。
+**Q: AI 平台页面打不开？**  
+A: 请检查网络连接，确保可以访问相应的 AI 服务。
 
 **Q: 可以在 Edge 中使用吗？**  
 A: 可以！Edge 完全支持 Chrome 扩展，安装和使用方法与 Chrome 相同。
+
+**Q: 自定义提示词不生效？**  
+A: 请确保点击"总结当前页面"按钮之前，提示词已经显示在输入框中。设置会自动保存。
+
+**Q: 为什么某些平台需要自动填充？**  
+A: ChatGPT、Gemini、Kimi、豆包等平台不支持通过 URL 参数传递查询，因此插件使用 Storage Bridge 模式，通过 Content Script 自动填充提示词。
 
 ## 开发与贡献
 
@@ -138,6 +202,15 @@ A: 可以！Edge 完全支持 Chrome 扩展，安装和使用方法与 Chrome �
 MIT License
 
 ## 更新日志
+
+### v2.0.0 (2026-02-10)
+
+- 新增支持 ChatGPT、Gemini、Kimi、豆包 四大 AI 平台
+- 新增用户配置界面，支持平台选择和自定义提示词
+- 新增多语言支持（中英文）
+- 新增自定义提示词变量 `${url}` 和 `${title}`
+- 新增 Storage Bridge 模式，解决 URL 传参限制
+- 新增 Content Scripts，实现自动填充和提交功能
 
 ### v1.0.0 (2026-02-08)
 

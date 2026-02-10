@@ -9,23 +9,45 @@
 
 <body>
   <div class="container">
-    <h1>网页内容总结器</h1>
-    <p>点击下方按钮或使用快捷键总结当前页面</p>
+    <h1 id="extensionTitle">网页内容总结器</h1>
+    
+    <div class="settings-section">
+      <label for="targetAI" id="labelPlatform">选择 AI 平台:</label>
+      <select id="targetAI" class="platform-select">
+        <option value="baidu" id="optionBaidu">百度 AI 搜索</option>
+        <option value="chatgpt" id="optionChatGPT">ChatGPT</option>
+        <option value="gemini" id="optionGemini">Google Gemini</option>
+        <option value="kimi" id="optionKimi">Kimi (月之暗面)</option>
+        <option value="doubao" id="optionDoubao">豆包 (Doubao)</option>
+      </select>
+    </div>
 
-    <button id="summarizeBtn">总结当前页面</button>
+    <div class="prompt-section">
+      <label for="promptInput" id="labelPrompt">自定义提示词:</label>
+      <p id="labelVariables">可用变量: ${url}, ${title}</p>
+      <textarea id="promptInput" rows="3" placeholder="请输入自定义提示词..."></textarea>
+      <div class="button-group">
+        <button id="saveSettingsBtn" class="btn-secondary">保存设置</button>
+        <button id="restoreDefaultsBtn" class="btn-secondary btn-outline">恢复默认</button>
+      </div>
+    </div>
+
+    <button id="summarizeBtn" class="primary-btn">总结当前页面</button>
 
     <div class="info">
-      <h3>快捷键</h3>
-      <p>Windows/Linux: <strong>Ctrl + Shift + H</strong></p>
-      <p>Mac: <strong>Command + Shift + H</strong></p>
+      <h3 id="labelShortcut">快捷键</h3>
+      <p id="textShortcutWindows">Windows/Linux: Ctrl + Shift + H</p>
+      <p id="textShortcutMac">Mac: Command + Shift + H</p>
       <button id="settingsBtn" class="settings-btn">设置快捷键</button>
     </div>
 
     <div class="info">
-      <h3>功能说明</h3>
+      <h3 id="labelFeatures">功能说明</h3>
       <ul>
-        <li>复制页面链接和提示词到剪贴板</li>
-        <li>自动打开百度AI搜索进行总结</li>
+        <li id="feature1">支持多个AI平台：百度AI、ChatGPT、Gemini、Kimi、豆包</li>
+        <li id="feature2">自动复制页面链接和提示词到剪贴板</li>
+        <li id="feature3">自动打开对应的AI平台进行总结</li>
+        <li id="feature4">支持自定义提示词和变量替换</li>
       </ul>
     </div>
   </div>
