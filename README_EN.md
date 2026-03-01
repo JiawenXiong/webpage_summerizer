@@ -7,7 +7,8 @@ A simple and easy-to-use browser extension for Chrome and Edge that allows you t
 ## Features
 
 - 🚀 One-click summarization: Trigger by clicking the extension icon or using keyboard shortcuts
-- 🤖 Multi-platform support: Supports Baidu AI, ChatGPT, Gemini, Kimi, Doubao five major AI platforms
+- 🖱️ Context menu: Right-click on any page to temporarily select a specific platform for summarization
+- 🤖 Multi-platform support: Supports Baidu AI, ChatGPT, Gemini, Kimi, Doubao, Grok six major AI platforms
 - ⚙️ Custom prompts: Support custom prompt templates with variables `${url}` and `${title}`
 - 📋 Auto-copy: Automatically copies the page URL and prompt to clipboard
 - 🔍 AI-powered summarization: Automatically opens the corresponding AI platform page for intelligent summarization
@@ -73,6 +74,13 @@ A simple and easy-to-use browser extension for Chrome and Edge that allows you t
 
 The keyboard shortcut will use the last saved settings for summarization.
 
+### Method 3: Context Menu
+
+1. Right-click on any webpage
+2. Select "Summarize to..." from the context menu
+3. Choose the target AI platform
+4. The extension will summarize using the selected platform (does not affect default settings)
+
 ### Custom Prompts
 
 In the extension popup, you can customize the prompt template with the following variables:
@@ -109,6 +117,7 @@ If the default shortcut conflicts with other applications, you can customize it:
 | Google Gemini | Uses Storage Bridge mode, auto-fill and submit |
 | Kimi (Moonshot AI) | Uses Storage Bridge mode, auto-fill and submit |
 | Doubao | Uses Storage Bridge mode, auto-fill and submit |
+| Grok (xAI) | Uses Storage Bridge mode, auto-fill and submit |
 
 ## How It Works
 
@@ -143,6 +152,7 @@ web_summarizer/
 ├── content_gemini.js      # Gemini auto-fill script
 ├── content_kimi.js        # Kimi auto-fill script
 ├── content_doubao.js      # Doubao auto-fill script
+├── content_grok.js        # Grok auto-fill script
 ├── _locales/              # Internationalization files
 │   ├── zh_CN/
 │   │   └── messages.json  # Chinese language pack
@@ -172,6 +182,7 @@ The extension requires the following permissions:
 - `activeTab` - Access to current active tab information
 - `clipboardWrite` - Clipboard write permission
 - `storage` - Store user configuration and pass data
+- `contextMenus` - Create context menu
 
 ## FAQ
 
@@ -202,6 +213,14 @@ Issues and Pull Requests are welcome!
 MIT License
 
 ## Changelog
+
+### v2.2.0 (2026-03-01)
+
+- Added context menu feature for temporarily selecting a specific platform
+
+### v2.1.0 (2026-03-01)
+
+- Added support for Grok (xAI) AI platform
 
 ### v2.0.0 (2026-02-10)
 

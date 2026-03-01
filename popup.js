@@ -20,6 +20,7 @@ function applyI18n() {
   document.getElementById('optionGemini').textContent = chrome.i18n.getMessage('platformGemini');
   document.getElementById('optionKimi').textContent = chrome.i18n.getMessage('platformKimi');
   document.getElementById('optionDoubao').textContent = chrome.i18n.getMessage('platformDoubao');
+  document.getElementById('optionGrok').textContent = chrome.i18n.getMessage('platformGrok');
   document.getElementById('labelPrompt').textContent = chrome.i18n.getMessage('customPromptLabel');
   document.getElementById('labelVariables').textContent = chrome.i18n.getMessage('availableVariables');
   document.getElementById('summarizeBtn').textContent = chrome.i18n.getMessage('summarizeBtn');

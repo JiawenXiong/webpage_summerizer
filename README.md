@@ -7,7 +7,8 @@
 ## 功能特性
 
 - 🚀 一键总结：点击插件图标或使用快捷键即可触发
-- 🤖 多平台支持：支持百度 AI、ChatGPT、Gemini、Kimi、豆包 五大 AI 平台
+- 🖱️ 右键菜单：网页右键菜单可临时选择特定平台进行总结
+- 🤖 多平台支持：支持百度 AI、ChatGPT、Gemini、Kimi、豆包、Grok 六大 AI 平台
 - ⚙️ 自定义提示词：支持自定义提示词模板，可用变量 `${url}` 和 `${title}`
 - 📋 自动复制：自动将页面链接和提示词复制到剪贴板
 - 🔍 AI 总结：自动打开对应的 AI 平台页面进行智能总结
@@ -73,6 +74,13 @@
 
 快捷键将使用上次保存的设置进行总结。
 
+### 方式三：右键菜单
+
+1. 在任意网页上右键
+2. 选择"总结到..."子菜单
+3. 选择目标 AI 平台
+4. 插件会自动使用所选平台进行总结（不影响默认设置）
+
 ### 自定义提示词
 
 在插件弹窗中，您可以自定义提示词模板，支持以下变量：
@@ -109,6 +117,7 @@
 | Google Gemini | 使用 Storage Bridge 模式，自动填充并提交 |
 | Kimi (月之暗面) | 使用 Storage Bridge 模式，自动填充并提交 |
 | 豆包 (Doubao) | 使用 Storage Bridge 模式，自动填充并提交 |
+| Grok (xAI) | 使用 Storage Bridge 模式，自动填充并提交 |
 
 ## 工作原理
 
@@ -143,6 +152,7 @@ web_summarizer/
 ├── content_gemini.js      # Gemini 自动填充脚本
 ├── content_kimi.js        # Kimi 自动填充脚本
 ├── content_doubao.js      # 豆包自动填充脚本
+├── content_grok.js        # Grok 自动填充脚本
 ├── _locales/              # 国际化文件
 │   ├── zh_CN/
 │   │   └── messages.json  # 中文语言包
@@ -172,6 +182,7 @@ web_summarizer/
 - `activeTab` - 获取当前活动标签页信息
 - `clipboardWrite` - 写入剪贴板权限
 - `storage` - 存储用户配置和传递数据
+- `contextMenus` - 创建右键菜单
 
 ## 常见问题
 
@@ -202,6 +213,14 @@ A: ChatGPT、Gemini、Kimi、豆包等平台不支持通过 URL 参数传递查�
 MIT License
 
 ## 更新日志
+
+### v2.2.0 (2026-03-01)
+
+- 新增右键菜单功能，可临时选择特定平台进行总结
+
+### v2.1.0 (2026-03-01)
+
+- 新增支持 Grok (xAI) AI 平台
 
 ### v2.0.0 (2026-02-10)
 
